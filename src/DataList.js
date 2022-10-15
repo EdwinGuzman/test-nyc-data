@@ -1,29 +1,38 @@
 function DataList(props) {
-    console.log("These are the props",props);
-    const deathData = props.data || [];
-    return <ul>
-        {
-          deathData.map((deathObject, index) => {
-            // age_adjusted_death_rate
-            // death_rate
-            // deaths
-            // leading_cause
-            // race_ethnicity
-            // sex
-            // year
-            return (
-              <li key={index}>
-                <p>Leading Cause: {deathObject.leading_cause}</p>
-                <p>Year: {deathObject.year}</p>
-                <p>Race Ethnicity: {deathObject.race_ethnicity}</p>
-                <p>Deaths: {deathObject.deaths} </p>
-
-              </li>
-            )
-          })
-        }
-      </ul>
-    ;
+  // console.log("These are the props",props);
+  const deathData = props.data || [];
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Count</th>
+          <th>Age Adjusted Death Rate</th>
+          <th>Death Rate</th>
+          <th>Death</th>
+          <th>Leading cause</th>
+          <th>Race Ethnicity</th>
+          <th>Sex</th>
+          <th>Year</th>
+        </tr>
+      </thead>
+      <tbody>
+        {deathData.map((deathObject, index) => {
+          return (
+            <tr key={index}>
+              <td>{index}</td>
+              <td>{deathObject.age_adjusted_death_rate}</td>
+              <td>{deathObject.death_rate}</td>
+              <td>{deathObject.deaths}</td>
+              <td>{deathObject.leading_cause}</td>
+              <td>{deathObject.race_ethnicity}</td>
+              <td>{deathObject.sex} </td>
+              <td>{deathObject.year}</td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  );
 }
 
 export default DataList;
