@@ -60,6 +60,23 @@ function App() {
         <option value="Non-Hispanic White">Non-Hispanic White</option>
         <option value="Not Stated/Unknown">Not Stated/Unknown</option>
       </select>
+
+      <label htmlFor="select-sex">Sex</label>
+      <select
+        id="select-sex"
+        onChange={(value) => {
+          filterData("sex", value.target.value);
+        }}
+      >
+        <option value="none">----</option>
+        {/* TODO: Optimize this by making a dynamic list when
+            the data is received. */}
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="M">M</option>
+        <option value="F">F</option>
+      </select>
+
       <h1>Leading Causes of Deaths in NYC</h1>
       <DataList data={filteredData} test="Testing" test2="Testing2" /> 
       
