@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import './App.css';
+import DataList from './DataList';
 
 function App() {
   const leadingCauseOfDeathData = "https://data.cityofnewyork.us/resource/jb7j-dtam.json";
@@ -15,7 +16,7 @@ function App() {
         return response.json()
       })
       .then((data) => {
-        // console.log(data)
+        console.log(data)
         setDeathData(data)
       })
       .catch((error) => {
@@ -25,26 +26,9 @@ function App() {
 
   return (
     <div className="App">
-      <ul>
-        {
-          deathData.map((deathObject, index) => {
-            // age_adjusted_death_rate
-            // death_rate
-            // deaths
-            // leading_cause
-            // race_ethnicity
-            // sex
-            // year
-            return (
-              <li key={index}>
-                <p>Leading Cause: {deathObject.leading_cause}</p>
-                <p>Year: {deathObject.year}</p>
-                <p>Race Ethnicity: {deathObject.race_ethnicity}</p>
-              </li>
-            )
-          })
-        }
-      </ul>
+      <h1>Leading Causes of Deaths in NYC</h1>
+      <DataList data={deathData} test="Testing" test2="Testing2" /> 
+      
     </div>
   );
 }
