@@ -1,3 +1,7 @@
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { useState, useEffect } from 'react';
 
 import './App.css';
@@ -7,6 +11,7 @@ function App() {
   const leadingCauseOfDeathData = "https://data.cityofnewyork.us/resource/jb7j-dtam.json";
   const [deathData, setDeathData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [selectedRace, setSelectedRace] = useState("none");
 
   useEffect(() => {
     fetch(leadingCauseOfDeathData)
@@ -42,24 +47,29 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <label htmlFor="select-race-ethnicity">Race Ethnicity</label>
-      <select
-        id="select-race-ethnicity"
-        onChange={(value) => {
-          filterData("race_ethnicity", value.target.value);
-        }}
-      >
-        <option value="none">----</option>
-        {/* TODO: Optimize this by making a dynamic list when
-            the data is received. */}
-        <option value="Other Race/Ethnicity">Other Race/Ethnicity</option>
-        <option value="Asian and Pacific Islander">Asian and Pacific Islander</option>
-        <option value="Non-Hispanic Black">Non-Hispanic Black</option>
-        <option value="Hispanic">Hispanic</option>
-        <option value="Non-Hispanic White">Non-Hispanic White</option>
-        <option value="Not Stated/Unknown">Not Stated/Unknown</option>
-      </select>
+    <div className="App" style={{margin: "20px" }}>
+      <FormControl variant="filled">
+        <InputLabel id="select-race-label">Race Ethnicity</InputLabel>
+        <Select
+          labelId="select-race-label"
+          id="select-race-id"
+          value={selectedRace}
+          label="Age"
+          onChange={(value) => {
+            filterData("race_ethnicity", value.target.value);
+            setSelectedRace(value.target.value);
+          }}
+          autoWidth
+        >
+          <MenuItem value="none">---</MenuItem>
+          <MenuItem value="Other Race/Ethnicity">Other Race/Ethnicity</MenuItem>
+          <MenuItem value="Asian and Pacific Islander">Asian and Pacific Islander</MenuItem>
+          <MenuItem value="Non-Hispanic Black">Non-Hispanic Black</MenuItem>
+          <MenuItem value="Hispanic">Hispanic</MenuItem>
+          <MenuItem value="Non-Hispanic White">Non-Hispanic White</MenuItem>
+          <MenuItem value="Not Stated/Unknown">Not Stated/Unknown</MenuItem>
+        </Select>
+      </FormControl>
 
       <label htmlFor="select-sex">Sex</label>
       <select
