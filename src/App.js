@@ -71,21 +71,62 @@ function App() {
         </Select>
       </FormControl>
 
-      <label htmlFor="select-sex">Sex</label>
+      <FormControl variant="filled">
+        <InputLabel id="select-sex-label">Sex</InputLabel>
+        <Select
+          labelId="select-sex-label"
+          id="select-sex-id"
+          value={selectedRace}
+          label="Sex"
+          onChange={(value) => {
+            filterData("sex", value.target.value);
+            setSelectedRace(value.target.value);
+          }}
+          autoWidth
+        >
+          <MenuItem value="none">---</MenuItem>
+          <MenuItem value="Male">Male</MenuItem>
+          <MenuItem value="Female">Female</MenuItem>
+
+        </Select>
+      </FormControl>
+
+      <FormControl variant="filled">
+        <InputLabel id="select-year-label">Year</InputLabel>
+        <Select
+          labelId="select-year-label"
+          id="select-year-id"
+          value={selectedRace}
+          label="Year"
+          onChange={(value) => {
+            filterData("Year", value.target.value);
+            setSelectedRace(value.target.value);
+          }}
+          autoWidth
+        >
+          <MenuItem value="none">---</MenuItem>
+          <MenuItem value="2019">2019</MenuItem>
+          <MenuItem value="2014">2014</MenuItem>
+
+        </Select>
+      </FormControl>
+  
+      <label htmlFor="select-year">Year</label>
       <select
-        id="select-sex"
+        id="select-year"
         onChange={(value) => {
-          filterData("sex", value.target.value);
+          filterData("year", value.target.value);
         }}
       >
         <option value="none">----</option>
-        {/* TODO: Optimize this by making a dynamic list when
+      {/* TODO: Optimize this by making a dynamic list when
             the data is received. */}
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="M">M</option>
-        <option value="F">F</option>
+        <option value="2019">2019</option>
+        <option value="2018">2018</option>
       </select>
+
+
+
 
       <h1>Leading Causes of Deaths in NYC</h1>
       <DataList data={filteredData} test="Testing" test2="Testing2" /> 
@@ -95,3 +136,4 @@ function App() {
 }
 
 export default App;
+
