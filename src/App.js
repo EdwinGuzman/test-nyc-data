@@ -12,6 +12,8 @@ function App() {
   const [deathData, setDeathData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedRace, setSelectedRace] = useState("none");
+  const [selectedYear, setSelectedYear] = useState("none");
+  const [selectedSex, setSelectedSex] = useState("none");
 
   useEffect(() => {
     fetch(leadingCauseOfDeathData)
@@ -22,7 +24,7 @@ function App() {
         return response.json()
       })
       .then((data) => {
-        // console.log(data)
+        console.log(data)
         setDeathData(data);
         setFilteredData(data);
       })
@@ -31,12 +33,28 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    console.log("selectedRace", selectedRace);
+    console.log("selectedSex", selectedSex);
+    // TODO: Add year selection
+    const newData = deathData.filter((data) => {
+      if (data["race_ethnicity"] === selectedRace &&
+        data.sex === selectedSex) {
+        return true;
+      }
+      return false;
+    });
+
+    setFilteredData(newData);
+  }, [selectedRace, deathData, selectedSex]);
+
   function filterData(dataProperty, filterValue) {
     if (filterValue === "none") {
       setFilteredData(deathData);
     } else {
       const newData = deathData.filter((data) => {
-        if (data[dataProperty] === filterValue) {
+        // if (data[dataProperty] === filterValue) {
+        if (data["race_ethnicity"] === selectedRace) { 
           return true;
         }
         return false;
@@ -56,7 +74,6 @@ function App() {
           value={selectedRace}
           label="Age"
           onChange={(value) => {
-            filterData("race_ethnicity", value.target.value);
             setSelectedRace(value.target.value);
           }}
           autoWidth
@@ -76,11 +93,10 @@ function App() {
         <Select
           labelId="select-sex-label"
           id="select-sex-id"
-          value={selectedRace}
+          value={selectedSex}
           label="Sex"
-          onChange={(value) => {
-            filterData("sex", value.target.value);
-            setSelectedRace(value.target.value);
+          onChange={(someothervalue) => {
+            setSelectedSex(someothervalue.target.value);
           }}
           autoWidth
         >
@@ -96,11 +112,11 @@ function App() {
         <Select
           labelId="select-year-label"
           id="select-year-id"
-          value={selectedRace}
+          value={selectedYear}
           label="Year"
           onChange={(value) => {
-            filterData("Year", value.target.value);
-            setSelectedRace(value.target.value);
+            filterData("year", value.target.value);
+            setSelectedYear(value.target.value);
           }}
           autoWidth
         >
@@ -111,23 +127,6 @@ function App() {
         </Select>
       </FormControl>
   
-      <label htmlFor="select-year">Year</label>
-      <select
-        id="select-year"
-        onChange={(value) => {
-          filterData("year", value.target.value);
-        }}
-      >
-        <option value="none">----</option>
-      {/* TODO: Optimize this by making a dynamic list when
-            the data is received. */}
-        <option value="2019">2019</option>
-        <option value="2018">2018</option>
-      </select>
-
-
-
-
       <h1>Leading Causes of Deaths in NYC</h1>
       <DataList data={filteredData} test="Testing" test2="Testing2" /> 
       
